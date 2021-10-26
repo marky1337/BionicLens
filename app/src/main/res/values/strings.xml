@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">BionicLens</string>
-    <string name="camera_activity">Open camera</string>
+    <string name="camera_activity"> Open camera </string>
 </resources>
