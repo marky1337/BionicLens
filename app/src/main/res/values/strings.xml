@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">BionicLens</string>
     <string name="camera_activity"> Open camera </string>
+    <string name="obj_recognition">Object Recognition</string>
+    <string name="age_recognition">Age&amp;Gender Recognition</string>
+    <string name="obj_recogn_activity">Object Recognition</string>
+    <string name="age_recogn_activity">Age&amp;Gen Recognition</string>
 </resources>

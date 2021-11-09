@@ -3,34 +3,65 @@ package com.example.bioniclens
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import kotlinx.android.synthetic.main.activity_camera.*
+import androidx.core.view.isVisible
+import kotlinx.android.synthetic.main.activity_obj_recognition.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-class CameraActivity : AppCompatActivity(){
+class AgeGenRecognitionActivity : AppCompatActivity() {
     private lateinit var cameraExecutor: ExecutorService;
     private lateinit var cameraSelector: CameraSelector;
     private lateinit var preview: Preview;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_camera)
+        setContentView(R.layout.activity_age_recognition)
+
+        val objectRecognition: Button = findViewById<Button>(R.id.obj_recognition)
+        val ageRecognition: Button = findViewById<Button>(R.id.age_recognition)
+
+        objectRecognition.setVisibility(View.INVISIBLE)
+        ageRecognition.setVisibility(View.INVISIBLE)
+
+        val netButton: ImageButton = findViewById(R.id.netButton)
+        netButton.setOnClickListener {
+            if(objectRecognition.isVisible){
+                objectRecognition.setVisibility(View.INVISIBLE)
+                ageRecognition.setVisibility(View.INVISIBLE)
+
+            }
+            else{
+                objectRecognition.setVisibility(View.VISIBLE)
+                ageRecognition.setVisibility(View.VISIBLE)
+            }
+        }
+
+        objectRecognition.setOnClickListener {
+            val intent = Intent(this, ObjRecognitionActivity::class.java)
+            startActivity(intent)
+        }
+        ageRecognition.setOnClickListener {
+            Toast.makeText(this, "Already there!", Toast.LENGTH_SHORT).show()
+        }
+
 
         if (allPermissionsGranted()) {
             startCamera()
         } else {
             ActivityCompat.requestPermissions(
-                this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
+                    this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
         }
 
         val switchCameraButton = findViewById<Button>(R.id.switchCameraButton)
@@ -54,13 +85,13 @@ class CameraActivity : AppCompatActivity(){
 
             // Preview
             preview = Preview.Builder()
-                .build()
-                .also {
-                    it.setSurfaceProvider(viewFinder.surfaceProvider)
-                }
+                    .build()
+                    .also {
+                        it.setSurfaceProvider(viewFinder.surfaceProvider)
+                    }
 
             // Select back camera as a default
-            cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+            cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
 
             try {
                 // Unbind use cases before rebinding
@@ -68,7 +99,7 @@ class CameraActivity : AppCompatActivity(){
 
                 // Bind use cases to camera
                 cameraProvider.bindToLifecycle(
-                    this, cameraSelector, preview)
+                        this, cameraSelector, preview)
 
             } catch(exc: Exception) {
                 Log.e(TAG, "Use case binding failed", exc)
@@ -111,20 +142,20 @@ class CameraActivity : AppCompatActivity(){
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
         ContextCompat.checkSelfPermission(
-            baseContext, it) == PackageManager.PERMISSION_GRANTED
+                baseContext, it) == PackageManager.PERMISSION_GRANTED
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<String>, grantResults:
-        IntArray) {
+            requestCode: Int, permissions: Array<String>, grantResults:
+            IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
             if (allPermissionsGranted()) {
                 startCamera()
             } else {
                 Toast.makeText(this,
-                    "Permissions not granted by the user.",
-                    Toast.LENGTH_SHORT).show()
+                        "Permissions not granted by the user.",
+                        Toast.LENGTH_SHORT).show()
                 finish()
             }
         }

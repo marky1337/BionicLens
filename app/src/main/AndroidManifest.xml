@@ -20,7 +20,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".CameraActivity"></activity>
+        <activity android:name=".ObjRecognitionActivity"></activity>
+        <activity android:name=".AgeGenRecognitionActivity"></activity>
     </application>
 
 </manifest>
