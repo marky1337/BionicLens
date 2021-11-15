@@ -16,6 +16,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import com.example.bioniclens.objectrecognition.ObjRecognitionActivity
 import kotlinx.android.synthetic.main.activity_obj_recognition.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
