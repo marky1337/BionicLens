@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ObjRecognitionActivity"></activity>
+        <activity android:name=".objectrecognition.ObjRecognitionActivity"></activity>
         <activity android:name=".AgeGenRecognitionActivity"></activity>
     </application>
 
