@@ -47,6 +47,8 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
     implementation 'com.google.mlkit:object-detection-custom:16.3.3'
     implementation 'com.google.mlkit:camera:16.0.0-beta1'
+    implementation 'com.google.android.gms:play-services-mlkit-text-recognition:17.0.0'
+    implementation 'com.google.mlkit:text-recognition-chinese:16.0.0-beta1'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

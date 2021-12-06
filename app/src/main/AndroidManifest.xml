@@ -21,7 +21,12 @@
         </activity>
 
         <activity android:name=".objectrecognition.ObjRecognitionActivity"></activity>
-        <activity android:name=".AgeGenRecognitionActivity"></activity>
+        <activity android:name=".agegenderrecognition.AgeGenRecognitionActivity"></activity>
+        <activity android:name=".textrecognition.TextRecognitionActivity"></activity>
+
+        <meta-data
+            android:name="com.google.mlkit.vision.DEPENDENCIES"
+            android:value="ocr" />
     </application>
 
 </manifest>
