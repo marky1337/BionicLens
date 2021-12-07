@@ -5,32 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_purple_gradient"
-    tools:context=".agegenderrecognition.AgeGenRecognitionActivity">
+    tools:context=".objectrecognition.ObjRecognitionActivity">
 
-    <ImageView
-        android:layout_width="56dp"
-        android:layout_height="53dp"
-        android:background="@drawable/deepface_icon"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.076"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.038"></ImageView>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/hammersmith_one_regular"
-        android:text="@string/age_recogn_activity"
-        android:textColor="@color/white"
-        android:textSize="25dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.653"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.047"></TextView>
 
     <androidx.camera.view.PreviewView
         android:id="@+id/viewFinder"
@@ -40,6 +16,40 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingClass,MissingConstraints"></androidx.camera.view.PreviewView>
+
+    <com.example.bioniclens.utils.GraphicOverlay
+        android:id="@+id/graphic_overlay"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="@id/viewFinder"
+        app:layout_constraintRight_toRightOf="@id/viewFinder"
+        app:layout_constraintTop_toTopOf="@id/viewFinder"
+        app:layout_constraintBottom_toBottomOf="@id/viewFinder" />
+
+    <ImageView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:background="@drawable/obj_activity_image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.109"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023"></ImageView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/hammersmith_one_regular"
+        android:text="@string/text_recognition"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.637"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.052"></TextView>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -61,18 +71,16 @@
             android:textColor="@color/white"
             android:fontFamily="@font/hammersmith_one_regular"/>
 
-        <Button
-            android:id="@+id/text_recognition"
-            android:layout_width="match_parent"
+        <Button android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:text="@string/age_recognition"
+            android:id="@+id/age_recognition"
             android:layout_marginTop="30dp"
+            android:layout_gravity="bottom"
             android:background="@drawable/option_button"
-            android:fontFamily="@font/hammersmith_one_regular"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-            android:text="@string/text_recognition"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:fontFamily="@font/hammersmith_one_regular"/>
+
     </LinearLayout>
 
     <Button
@@ -89,16 +97,14 @@
 
     <ImageButton
         android:id="@+id/netButton"
-        android:layout_width="54dp"
-        android:layout_height="51dp"
-        android:layout_marginEnd="312dp"
-        android:layout_marginBottom="20dp"
+        android:layout_width="58dp"
+        android:layout_height="58dp"
         android:background="@drawable/net_selector"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.844"
+        app:layout_constraintHorizontal_bias="0.046"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.996" />
+        app:layout_constraintVertical_bias="0.976" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

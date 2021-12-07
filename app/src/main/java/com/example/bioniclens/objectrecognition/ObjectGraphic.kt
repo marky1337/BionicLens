@@ -1,9 +1,10 @@
-package com.example.bioniclens.utils
+package com.example.bioniclens.objectrecognition
 
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
+import com.example.bioniclens.utils.GraphicOverlay
 import com.example.bioniclens.utils.GraphicOverlay.Graphic
 import com.google.mlkit.vision.objects.DetectedObject
 import java.util.Locale
@@ -13,8 +14,8 @@ import kotlin.math.min
 
 // Draw the detected object info in preview.
 class ObjectGraphic constructor(
-        overlay: GraphicOverlay,
-        private val detectedObject: DetectedObject
+    overlay: GraphicOverlay,
+    private val detectedObject: DetectedObject
 ) : Graphic(overlay) {
 
     private val numColors = COLORS.size
@@ -27,11 +28,13 @@ class ObjectGraphic constructor(
         for (i in 0 until numColors) {
             textPaints[i] = Paint()
             textPaints[i].color = COLORS[i][0]
-            textPaints[i].textSize = TEXT_SIZE
+            textPaints[i].textSize =
+                TEXT_SIZE
             boxPaints[i] = Paint()
             boxPaints[i].color = COLORS[i][1]
             boxPaints[i].style = Paint.Style.STROKE
-            boxPaints[i].strokeWidth = STROKE_WIDTH
+            boxPaints[i].strokeWidth =
+                STROKE_WIDTH
             labelPaints[i] = Paint()
             labelPaints[i].color = COLORS[i][1]
             labelPaints[i].style = Paint.Style.FILL
@@ -57,7 +60,7 @@ class ObjectGraphic constructor(
                 textPaints[colorID].measureText(
                     String.format(
                         Locale.US,
-                            LABEL_FORMAT,
+                        LABEL_FORMAT,
                         label.confidence * 100,
                         label.index
                     )
@@ -103,7 +106,7 @@ class ObjectGraphic constructor(
             canvas.drawText(
                 String.format(
                     Locale.US,
-                        LABEL_FORMAT,
+                    LABEL_FORMAT,
                     label.confidence * 100,
                     label.index
                 ),

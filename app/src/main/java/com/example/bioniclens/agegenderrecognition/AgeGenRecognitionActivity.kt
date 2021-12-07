@@ -1,4 +1,4 @@
-package com.example.bioniclens
+package com.example.bioniclens.agegenderrecognition
 
 import android.Manifest
 import android.content.Intent
@@ -16,7 +16,9 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import com.example.bioniclens.R
 import com.example.bioniclens.objectrecognition.ObjRecognitionActivity
+import com.example.bioniclens.textrecognition.TextRecognitionActivity
 import kotlinx.android.synthetic.main.activity_obj_recognition.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -31,21 +33,21 @@ class AgeGenRecognitionActivity : AppCompatActivity() {
         setContentView(R.layout.activity_age_recognition)
 
         val objectRecognition: Button = findViewById<Button>(R.id.obj_recognition)
-        val ageRecognition: Button = findViewById<Button>(R.id.age_recognition)
+        val textRecognition: Button = findViewById<Button>(R.id.text_recognition)
 
         objectRecognition.setVisibility(View.INVISIBLE)
-        ageRecognition.setVisibility(View.INVISIBLE)
+        textRecognition.setVisibility(View.INVISIBLE)
 
         val netButton: ImageButton = findViewById(R.id.netButton)
         netButton.setOnClickListener {
             if(objectRecognition.isVisible){
                 objectRecognition.setVisibility(View.INVISIBLE)
-                ageRecognition.setVisibility(View.INVISIBLE)
+                textRecognition.setVisibility(View.INVISIBLE)
 
             }
             else{
                 objectRecognition.setVisibility(View.VISIBLE)
-                ageRecognition.setVisibility(View.VISIBLE)
+                textRecognition.setVisibility(View.VISIBLE)
             }
         }
 
@@ -53,10 +55,11 @@ class AgeGenRecognitionActivity : AppCompatActivity() {
             val intent = Intent(this, ObjRecognitionActivity::class.java)
             startActivity(intent)
         }
-        ageRecognition.setOnClickListener {
-            Toast.makeText(this, "Already there!", Toast.LENGTH_SHORT).show()
-        }
 
+        textRecognition.setOnClickListener {
+            val intent = Intent(this, TextRecognitionActivity::class.java)
+            startActivity(intent)
+        }
 
         if (allPermissionsGranted()) {
             startCamera()
