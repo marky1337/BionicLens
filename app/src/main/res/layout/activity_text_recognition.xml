@@ -81,6 +81,17 @@
             android:textColor="@color/white"
             android:fontFamily="@font/hammersmith_one_regular"/>
 
+        <Button
+            android:id="@+id/face_detection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/option_button"
+            android:fontFamily="@font/hammersmith_one_regular"
+            android:text="@string/face_detection"
+            android:textColor="@color/white" />
+
     </LinearLayout>
 
     <Button

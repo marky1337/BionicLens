@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.example.bioniclens.R
 import com.example.bioniclens.objectrecognition.ObjRecognitionActivity
+import com.example.bioniclens.facedetection.FaceDetectionActivity
 import com.example.bioniclens.textrecognition.TextRecognitionActivity
 import kotlinx.android.synthetic.main.activity_obj_recognition.*
 import java.util.concurrent.ExecutorService
@@ -32,22 +33,26 @@ class AgeGenRecognitionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_age_recognition)
 
+        // Use-case buttons START
         val objectRecognition: Button = findViewById<Button>(R.id.obj_recognition)
         val textRecognition: Button = findViewById<Button>(R.id.text_recognition)
+        val faceDetection: Button = findViewById<Button>(R.id.face_detection)
 
         objectRecognition.setVisibility(View.INVISIBLE)
         textRecognition.setVisibility(View.INVISIBLE)
+        faceDetection.setVisibility(View.INVISIBLE)
 
         val netButton: ImageButton = findViewById(R.id.netButton)
         netButton.setOnClickListener {
             if(objectRecognition.isVisible){
                 objectRecognition.setVisibility(View.INVISIBLE)
                 textRecognition.setVisibility(View.INVISIBLE)
-
+                faceDetection.setVisibility(View.INVISIBLE)
             }
             else{
                 objectRecognition.setVisibility(View.VISIBLE)
                 textRecognition.setVisibility(View.VISIBLE)
+                faceDetection.setVisibility(View.VISIBLE)
             }
         }
 
@@ -60,6 +65,12 @@ class AgeGenRecognitionActivity : AppCompatActivity() {
             val intent = Intent(this, TextRecognitionActivity::class.java)
             startActivity(intent)
         }
+
+        faceDetection.setOnClickListener {
+            val intent = Intent(this, FaceDetectionActivity::class.java)
+            startActivity(intent)
+        }
+        // Use-case buttons END
 
         if (allPermissionsGranted()) {
             startCamera()
