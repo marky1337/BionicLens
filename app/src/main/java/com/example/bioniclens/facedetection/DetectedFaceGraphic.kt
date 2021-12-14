@@ -24,7 +24,7 @@ class DetectedFaceGraphic internal constructor(
 
     // Draws the face annotations for position on the supplied canvas.
     override fun draw(canvas: Canvas) {
-        val face = face ?: return
+        val face = face
 
         // Draws a circle at the position of the detected face, with the face's track id below.
         val x = translateX(face.boundingBox.centerX().toFloat())
@@ -256,6 +256,12 @@ class DetectedFaceGraphic internal constructor(
         drawFaceLandmark(canvas, FaceLandmark.RIGHT_EYE)
         drawFaceLandmark(canvas, FaceLandmark.LEFT_CHEEK)
         drawFaceLandmark(canvas, FaceLandmark.RIGHT_CHEEK)
+        drawFaceLandmark(canvas, FaceLandmark.LEFT_EAR)
+        drawFaceLandmark(canvas, FaceLandmark.RIGHT_EAR)
+        drawFaceLandmark(canvas, FaceLandmark.NOSE_BASE)
+        drawFaceLandmark(canvas, FaceLandmark.MOUTH_BOTTOM)
+        drawFaceLandmark(canvas, FaceLandmark.MOUTH_LEFT)
+        drawFaceLandmark(canvas, FaceLandmark.MOUTH_RIGHT)
     }
 
     private fun drawFaceLandmark(
