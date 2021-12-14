@@ -4,6 +4,17 @@
     <string name="obj_recognition">Object Recognition</string>
     <string name="age_recognition">Age&amp;Gender Recognition</string>
     <string name="text_recognition">Text Recognition</string>
+    <string name="face_detection">Face Detection</string>
     <string name="obj_recogn_activity">Object Recognition</string>
     <string name="age_recogn_activity">Age&amp;Gen Recognition</string>
+    <string name="face_det_enable_contour">Enable Face Contour</string>
+    <string name="face_det_disable_contour">Disable Face Contour</string>
+    <string name="face_det_enable_landmarks">Enable Face Landmarks</string>
+    <string name="face_det_disable_landmarks">Disable Face Landmarks</string>
+    <string name="face_det_enable_classification">Enable Classification</string>
+    <string name="face_det_disable_classification">Disable Classification</string>
+    <string name="face_det_enable_tracking">Enable Face Tracking</string>
+    <string name="face_det_disable_tracking">Disable Face Tracking</string>
+    <string name="face_det_favor_performance">Favor Performance</string>
+    <string name="face_det_favor_accuracy">Favor Accuracy</string>
 </resources>
