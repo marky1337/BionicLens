@@ -10,17 +10,35 @@
 
 
     <Button
-        android:id="@+id/cameraButton"
-        android:layout_width="146dp"
-        android:layout_height="51dp"
+        android:id="@+id/introButton"
+        android:layout_width="94dp"
+        android:layout_height="34dp"
         android:background="@drawable/btn_detect"
-        android:text="@string/camera_activity"
+        android:text="@string/intro"
+        android:fontFamily="@font/hammersmith_one_regular"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.543"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.666"
+        app:layout_constraintVertical_bias="0.732"
+        tools:ignore="MissingClass" />
+
+    <Button
+        android:id="@+id/cameraButton"
+        android:layout_width="146dp"
+        android:layout_height="51dp"
+        android:background="@drawable/btn_detect"
+        android:text="@string/camera_activity"
+        android:fontFamily="@font/hammersmith_one_regular"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.543"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.638"
         tools:ignore="MissingClass" />
 
     <Button
@@ -55,12 +73,11 @@
         android:layout_height="182dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.807"
+        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.996"
-        app:srcCompat="@drawable/design_vector"
-        />
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/design_vector" />
 
     <TextView
         android:id="@+id/textView"

@@ -109,9 +109,9 @@ class ObjRecognitionActivity : AppCompatActivity(){
         }
 
         // Use-case buttons START
-        val textRecognition: Button = findViewById<Button>(R.id.text_recognition)
-        val ageRecognition: Button = findViewById<Button>(R.id.age_recognition)
-        val faceDetection: Button = findViewById<Button>(R.id.face_detection)
+        val textRecognition: Button = findViewById(R.id.text_recognition)
+        val ageRecognition: Button = findViewById(R.id.age_recognition)
+        val faceDetection: Button = findViewById(R.id.face_detection)
         textRecognition.setVisibility(View.INVISIBLE)
         ageRecognition.setVisibility(View.INVISIBLE)
         faceDetection.setVisibility(View.INVISIBLE)
@@ -133,16 +133,19 @@ class ObjRecognitionActivity : AppCompatActivity(){
         ageRecognition.setOnClickListener {
             val intent = Intent(this, AgeGenRecognitionActivity::class.java)
             startActivity(intent)
+            makeButtonsInvisible(textRecognition,ageRecognition,faceDetection)
         }
 
         textRecognition.setOnClickListener {
             val intent = Intent(this, TextRecognitionActivity::class.java)
             startActivity(intent)
+            makeButtonsInvisible(textRecognition,ageRecognition,faceDetection)
         }
 
         faceDetection.setOnClickListener {
             val intent = Intent(this, FaceDetectionActivity::class.java)
             startActivity(intent)
+            makeButtonsInvisible(textRecognition,ageRecognition,faceDetection)
         }
         // Use-case buttons END
         if (allPermissionsGranted()) {
@@ -245,6 +248,16 @@ class ObjRecognitionActivity : AppCompatActivity(){
 
         cameraSource = CameraXSource(builder.build(), previewView!!)
         needUpdateGraphicOverlayImageSourceInfo = true
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
         cameraSource!!.start()
     }
 
@@ -267,6 +280,12 @@ class ObjRecognitionActivity : AppCompatActivity(){
                 finish()
             }
         }
+    }
+
+    private fun makeButtonsInvisible(b1 : Button, b2 : Button, b3 : Button){
+        b1.setVisibility(View.INVISIBLE)
+        b2.setVisibility(View.INVISIBLE)
+        b3.setVisibility(View.INVISIBLE)
     }
 
     private val isPortraitMode: Boolean
