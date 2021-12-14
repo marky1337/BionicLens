@@ -49,6 +49,7 @@ dependencies {
     implementation 'com.google.mlkit:camera:16.0.0-beta1'
     implementation 'com.google.android.gms:play-services-mlkit-text-recognition:17.0.0'
     implementation 'com.google.mlkit:text-recognition-chinese:16.0.0-beta1'
+    implementation 'com.google.mlkit:face-detection:16.1.2'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
