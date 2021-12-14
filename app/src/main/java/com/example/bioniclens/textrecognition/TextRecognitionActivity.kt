@@ -19,6 +19,7 @@ import androidx.core.view.isVisible
 import com.example.bioniclens.agegenderrecognition.AgeGenRecognitionActivity
 import com.example.bioniclens.R
 import com.example.bioniclens.RecognizedTextGraphic
+import com.example.bioniclens.facedetection.FaceDetectionActivity
 import com.example.bioniclens.objectrecognition.ObjRecognitionActivity
 import com.example.bioniclens.utils.GraphicOverlay
 import com.example.bioniclens.utils.InferenceInfoGraphic
@@ -29,7 +30,6 @@ import com.google.mlkit.vision.text.Text
 import com.google.mlkit.vision.text.TextRecognizer
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
-import com.google.mlkit.vision.text.chinese.ChineseTextRecognizerOptions
 
 class TextRecognitionActivity : AppCompatActivity(){
     private var previewView: PreviewView? = null
@@ -85,20 +85,25 @@ class TextRecognitionActivity : AppCompatActivity(){
                     .addOnFailureListener { e -> onTextRecognitionTaskFailure(e) }
         }
 
+        // Use-case buttons START
         val objectRecognition: Button = findViewById<Button>(R.id.obj_recognition)
         val ageRecognition: Button = findViewById<Button>(R.id.age_recognition)
+        val faceDetection: Button = findViewById<Button>(R.id.face_detection)
         objectRecognition.setVisibility(View.INVISIBLE)
         ageRecognition.setVisibility(View.INVISIBLE)
+        faceDetection.setVisibility(View.INVISIBLE)
 
         val netButton: ImageButton = findViewById(R.id.netButton)
         netButton.setOnClickListener {
             if(objectRecognition.isVisible){
                 objectRecognition.setVisibility(View.INVISIBLE)
                 ageRecognition.setVisibility(View.INVISIBLE)
+                faceDetection.setVisibility(View.INVISIBLE)
             }
             else{
                 objectRecognition.setVisibility(View.VISIBLE)
                 ageRecognition.setVisibility(View.VISIBLE)
+                faceDetection.setVisibility(View.VISIBLE)
             }
         }
 
@@ -106,11 +111,17 @@ class TextRecognitionActivity : AppCompatActivity(){
             val intent = Intent(this, ObjRecognitionActivity::class.java)
             startActivity(intent)
         }
+
         ageRecognition.setOnClickListener {
             val intent = Intent(this, AgeGenRecognitionActivity::class.java)
             startActivity(intent)
         }
 
+        faceDetection.setOnClickListener {
+            val intent = Intent(this, FaceDetectionActivity::class.java)
+            startActivity(intent)
+        }
+        // Use-case buttons END
         if (allPermissionsGranted()) {
             startSwitchCamera()
         } else {
