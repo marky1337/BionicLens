@@ -29,7 +29,7 @@
     <ImageView
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:background="@drawable/obj_activity_image"
+        android:background="@drawable/text_activity"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.109"

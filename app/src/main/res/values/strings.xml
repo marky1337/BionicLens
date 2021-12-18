@@ -17,4 +17,5 @@
     <string name="face_det_disable_tracking">Disable Face Tracking</string>
     <string name="face_det_favor_performance">Favor Performance</string>
     <string name="face_det_favor_accuracy">Favor Accuracy</string>
+    <string name="intro">Intro</string>
 </resources>
