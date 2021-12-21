@@ -85,21 +85,25 @@ class IntroActivity : AppCompatActivity() {
         mList.add(
                 ScreenItem(
                         "Object Recognition",
-                        "",
+                        "★ Start camera, and you can do identify, live, different categories of objects." +
+                                "★ You cand do object detection with either front and back camera."+
+                                "★ Application can recognize up to 80 different categories of objects.",
                         R.drawable.intro_obj_activity
                 )
         )
         mList.add(
                 ScreenItem(
                         "Face detection",
-                        "",
+                        "★ Start camera, and you cand detect faces from real-time frames from your camera."+
+                                   "★ You can identify key facial features and contours of detected faces." +
+                                   "★ You can customize face detection by the settings button with different options.",
                         R.drawable.intro_face_activity
                 )
         )
         mList.add(
                 ScreenItem(
                         "Text recognition",
-                        "",
+                        "★ Real-time text recognition in any Latin-based characters set",
                         R.drawable.ic_text_recognition
                 )
         )
