@@ -76,14 +76,16 @@
             android:textColor="@color/white" />
 
         <Button
-            android:id="@+id/age_recognition"
-            android:layout_width="wrap_content"
+            android:id="@+id/selfie_segmentation"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
+            android:layout_gravity="center"
             android:layout_marginTop="30dp"
             android:background="@drawable/option_button"
             android:fontFamily="@font/hammersmith_one_regular"
-            android:text="@string/age_recognition"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:text="@string/selfie_segmentation"
             android:textColor="@color/white" />
 
         <Button

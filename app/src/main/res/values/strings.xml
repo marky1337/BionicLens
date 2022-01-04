@@ -18,4 +18,5 @@
     <string name="face_det_favor_performance">Favor Performance</string>
     <string name="face_det_favor_accuracy">Favor Accuracy</string>
     <string name="intro">Intro</string>
+    <string name="selfie_segmentation">Selfie Segmentation</string>
 </resources>

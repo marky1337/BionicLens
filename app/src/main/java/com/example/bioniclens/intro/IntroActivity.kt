@@ -64,39 +64,39 @@ class IntroActivity : AppCompatActivity() {
                                 "     ★ Object Recognition\n" +
                                 "     ★ Face Detection\n" +
                                 "     ★ Text Recognition\n" +
-                                "     ★ Semantic Segmentation\n",
+                                "     ★ Selfie Segmentation\n",
                         R.drawable.net_default
                 )
         )
         mList.add(
                 ScreenItem(
                         "Switch camera",
-                        "Switch to front/back camera",
+                        "★ Switch to front/back camera",
                         R.drawable.switch_camera
                 )
         )
         mList.add(
                 ScreenItem(
                         "Settings",
-                        "Customize activity application to your preferences",
+                        "★ Customize activity application to your preferences",
                         R.drawable.settings_cog
                 )
         )
         mList.add(
                 ScreenItem(
                         "Object Recognition",
-                        "★ Start camera, and you can do identify, live, different categories of objects." +
-                                "★ You cand do object detection with either front and back camera."+
-                                "★ Application can recognize up to 80 different categories of objects.",
+                        "★ Start camera, and you can do identify, live, different categories of objects.\n"+
+                                "★ You can do object detection with either front and back camera.\n"+
+                                "★ Application can recognize up to 80 different categories of objects.\n",
                         R.drawable.intro_obj_activity
                 )
         )
         mList.add(
                 ScreenItem(
                         "Face detection",
-                        "★ Start camera, and you cand detect faces from real-time frames from your camera."+
-                                   "★ You can identify key facial features and contours of detected faces." +
-                                   "★ You can customize face detection by the settings button with different options.",
+                        "  ★ Start camera, and you cand detect faces from real-time frames from your camera.\n"+
+                                   "★ You can identify key facial features and contours of detected faces.\n" +
+                                   "★ You can customize face detection by the settings button with different options.\n",
                         R.drawable.intro_face_activity
                 )
         )
@@ -105,6 +105,14 @@ class IntroActivity : AppCompatActivity() {
                         "Text recognition",
                         "★ Real-time text recognition in any Latin-based characters set",
                         R.drawable.ic_text_recognition
+                )
+        )
+        mList.add(
+                ScreenItem(
+                        "Selfie segmentation",
+                        "★ Real-time selfie segmentation.\n"+
+                                   "★ Separate the background from users within a scene.\n",
+                        R.drawable.intro_selfie_segmentation
                 )
         )
 
