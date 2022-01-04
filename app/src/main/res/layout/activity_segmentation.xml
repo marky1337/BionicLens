@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_purple_gradient"
-    tools:context=".objectrecognition.ObjRecognitionActivity">
+    tools:context=".selfie_segmentation.SelfieSegmentationActivity">
 
 
     <androidx.camera.view.PreviewView
@@ -29,7 +29,7 @@
     <ImageView
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:background="@drawable/obj_activity_image"
+        android:background="@drawable/ic_selfie_segmentation"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.109"
@@ -41,15 +41,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/hammersmith_one_regular"
-        android:text="@string/obj_recognition"
+        android:text="@string/selfie_segmentation"
         android:textColor="@color/white"
         android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.637"
+        app:layout_constraintHorizontal_bias="0.713"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.052"></TextView>
+        app:layout_constraintVertical_bias="0.051"></TextView>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -60,18 +60,16 @@
         app:layout_constraintRight_toRightOf="parent"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/text_recognition"
-            android:layout_width="match_parent"
+        <Button android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/option_button"
-            android:fontFamily="@font/hammersmith_one_regular"
+            android:text="@string/obj_recognition"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
-            android:text="@string/text_recognition"
-            android:textColor="@color/white" />
+            android:id="@+id/obj_recognition"
+            android:layout_gravity="center"
+            android:background="@drawable/option_button"
+            android:textColor="@color/white"
+            android:fontFamily="@font/hammersmith_one_regular"/>
 
         <Button
             android:id="@+id/face_detection"
@@ -85,17 +83,16 @@
             android:textColor="@color/white" />
 
         <Button
-            android:id="@+id/selfie_segmentation"
+            android:id="@+id/text_recognition"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="bottom"
             android:layout_marginTop="30dp"
             android:background="@drawable/option_button"
             android:fontFamily="@font/hammersmith_one_regular"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-            android:text="@string/selfie_segmentation"
+            android:text="@string/text_recognition"
             android:textColor="@color/white" />
+
     </LinearLayout>
 
     <Button

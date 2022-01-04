@@ -8,6 +8,7 @@ import com.example.bioniclens.utils.GraphicOverlay.Graphic
 import com.google.mlkit.vision.face.Face
 import com.google.mlkit.vision.face.FaceLandmark
 import com.google.mlkit.vision.face.FaceLandmark.LandmarkType
+
 import java.util.*
 
 // Graphic instance for rendering face position, contour, and landmarks within the associated

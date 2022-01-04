@@ -19,6 +19,7 @@ import androidx.core.view.isVisible
 import com.example.bioniclens.agegenderrecognition.AgeGenRecognitionActivity
 import com.example.bioniclens.R
 import com.example.bioniclens.facedetection.FaceDetectionActivity
+import com.example.bioniclens.selfie_segmentation.SelfieSegmentationActivity
 import com.example.bioniclens.textrecognition.TextRecognitionActivity
 import com.example.bioniclens.utils.GraphicOverlay
 import com.example.bioniclens.utils.InferenceInfoGraphic
@@ -110,42 +111,43 @@ class ObjRecognitionActivity : AppCompatActivity(){
 
         // Use-case buttons START
         val textRecognition: Button = findViewById(R.id.text_recognition)
-        val ageRecognition: Button = findViewById(R.id.age_recognition)
         val faceDetection: Button = findViewById(R.id.face_detection)
+        val selfieSegmentation: Button = findViewById(R.id.selfie_segmentation)
+
         textRecognition.setVisibility(View.INVISIBLE)
-        ageRecognition.setVisibility(View.INVISIBLE)
         faceDetection.setVisibility(View.INVISIBLE)
+        selfieSegmentation.setVisibility(View.INVISIBLE)
 
         val netButton: ImageButton = findViewById(R.id.netButton)
         netButton.setOnClickListener {
             if(textRecognition.isVisible){
                 textRecognition.setVisibility(View.INVISIBLE)
-                ageRecognition.setVisibility(View.INVISIBLE)
                 faceDetection.setVisibility(View.INVISIBLE)
+                selfieSegmentation.setVisibility(View.INVISIBLE)
             }
             else{
                 textRecognition.setVisibility(View.VISIBLE)
-                ageRecognition.setVisibility(View.VISIBLE)
                 faceDetection.setVisibility(View.VISIBLE)
+                selfieSegmentation.setVisibility(View.VISIBLE)
             }
-        }
-
-        ageRecognition.setOnClickListener {
-            val intent = Intent(this, AgeGenRecognitionActivity::class.java)
-            startActivity(intent)
-            makeButtonsInvisible(textRecognition,ageRecognition,faceDetection)
         }
 
         textRecognition.setOnClickListener {
             val intent = Intent(this, TextRecognitionActivity::class.java)
             startActivity(intent)
-            makeButtonsInvisible(textRecognition,ageRecognition,faceDetection)
+            makeButtonsInvisible(textRecognition, faceDetection, selfieSegmentation)
         }
 
         faceDetection.setOnClickListener {
             val intent = Intent(this, FaceDetectionActivity::class.java)
             startActivity(intent)
-            makeButtonsInvisible(textRecognition,ageRecognition,faceDetection)
+            makeButtonsInvisible(textRecognition, faceDetection, selfieSegmentation)
+        }
+
+        selfieSegmentation.setOnClickListener {
+            val intent = Intent(this, SelfieSegmentationActivity::class.java)
+            startActivity(intent)
+            makeButtonsInvisible(textRecognition, faceDetection, selfieSegmentation)
         }
         // Use-case buttons END
         if (allPermissionsGranted()) {

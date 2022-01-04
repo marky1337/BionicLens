@@ -1,4 +1,4 @@
-package com.example.bioniclens.textrecognition
+package com.example.bioniclens.selfie_segmentation
 
 import android.Manifest
 import android.content.Intent
@@ -16,46 +16,56 @@ import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import com.example.bioniclens.agegenderrecognition.AgeGenRecognitionActivity
 import com.example.bioniclens.R
-import com.example.bioniclens.RecognizedTextGraphic
+import com.example.bioniclens.agegenderrecognition.AgeGenRecognitionActivity
 import com.example.bioniclens.facedetection.FaceDetectionActivity
 import com.example.bioniclens.objectrecognition.ObjRecognitionActivity
-import com.example.bioniclens.selfie_segmentation.SelfieSegmentationActivity
+import com.example.bioniclens.textrecognition.TextRecognitionActivity
 import com.example.bioniclens.utils.GraphicOverlay
 import com.example.bioniclens.utils.InferenceInfoGraphic
 import com.google.mlkit.vision.camera.CameraSourceConfig
 import com.google.mlkit.vision.camera.CameraXSource
 import com.google.mlkit.vision.camera.DetectionTaskCallback
-import com.google.mlkit.vision.text.Text
-import com.google.mlkit.vision.text.TextRecognizer
-import com.google.mlkit.vision.text.TextRecognition
-import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import com.google.mlkit.vision.segmentation.SegmentationMask
+import com.google.mlkit.vision.segmentation.selfie.SelfieSegmenterOptions
+import com.google.mlkit.vision.segmentation.Segmenter
+import com.google.mlkit.vision.segmentation.Segmentation
 
-class TextRecognitionActivity : AppCompatActivity(){
+class SelfieSegmentationActivity : AppCompatActivity(){
+
     private var previewView: PreviewView? = null
-    private var cameraSource: CameraXSource? = null
     private var graphicOverlay: GraphicOverlay? = null
-    private var lensFacing: Int = CameraSourceConfig.CAMERA_FACING_BACK
-    private var targetResolution: Size? = null
     private var needUpdateGraphicOverlayImageSourceInfo = false
-    private var textRecTaskCallback: DetectionTaskCallback<Text>? = null
-    private var textRecognizer: TextRecognizer? = null
+    private var isImageFlipped: Boolean = false
+    private var segmentationTaskCallback: DetectionTaskCallback<SegmentationMask>? = null
+    private var lensFacing: Int = CameraSourceConfig.CAMERA_FACING_BACK
+    private var cameraSource: CameraXSource? = null
+    private var selfieSegmentationOptions: SelfieSegmenterOptions? = null
+    private var selfieSegmentationOptionsBuilder:SelfieSegmenterOptions.Builder? = null
+    private var segmenter : Segmenter? = null
+    private var targetResolution: Size? = null
 
-    // When resuming the app, restart the camera
+
+    private fun switchCameraFacing()
+    {
+        if (lensFacing == CameraSourceConfig.CAMERA_FACING_BACK)
+        {
+            lensFacing = CameraSourceConfig.CAMERA_FACING_FRONT
+            isImageFlipped = false
+        }
+        else
+        {
+            lensFacing = CameraSourceConfig.CAMERA_FACING_BACK
+            isImageFlipped = true
+        }
+    }
+
     override fun onResume()
     {
         super.onResume()
         if (allPermissionsGranted()) {
             // Small workaround to prevent switching cameras when we resume the app
-            if (lensFacing == CameraSourceConfig.CAMERA_FACING_BACK)
-            {
-                lensFacing = CameraSourceConfig.CAMERA_FACING_FRONT
-            }
-            else
-            {
-                lensFacing = CameraSourceConfig.CAMERA_FACING_BACK
-            }
+            switchCameraFacing()
             startSwitchCamera()
         } else {
             ActivityCompat.requestPermissions(
@@ -65,7 +75,7 @@ class TextRecognitionActivity : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_text_recognition)
+        setContentView(R.layout.activity_segmentation)
 
         // Fetch the preview view
         previewView = findViewById(R.id.viewFinder)
@@ -80,50 +90,60 @@ class TextRecognitionActivity : AppCompatActivity(){
         }
 
         // Set the callbacks for a successful inference and for a failed inference
-        textRecTaskCallback = DetectionTaskCallback<Text> { textRecTask ->
-            textRecTask
-                    .addOnSuccessListener { result -> onTextRecognitionTaskSuccess(result) }
-                    .addOnFailureListener { e -> onTextRecognitionTaskFailure(e) }
+        segmentationTaskCallback = DetectionTaskCallback<SegmentationMask> { segmentationTask ->
+            segmentationTask
+                    .addOnSuccessListener { result -> onSegmentationTaskSuccess(result) }
+                    .addOnFailureListener { e -> onSegmentationTaskFailure(e) }
         }
+
+        selfieSegmentationOptionsBuilder = SelfieSegmenterOptions.Builder()
+
+        if(isStreamMode){
+            selfieSegmentationOptionsBuilder!!.setDetectorMode(SelfieSegmenterOptions.STREAM_MODE)
+        }
+        else{
+            selfieSegmentationOptionsBuilder!!.setDetectorMode(SelfieSegmenterOptions.SINGLE_IMAGE_MODE)
+        }
+        selfieSegmentationOptions = selfieSegmentationOptionsBuilder!!.build()
 
         // Use-case buttons START
         val objectRecognition: Button = findViewById<Button>(R.id.obj_recognition)
-        val selfieSegmentation: Button = findViewById<Button>(R.id.selfie_segmentation)
         val faceDetection: Button = findViewById<Button>(R.id.face_detection)
+        val textRecognition: Button = findViewById<Button>(R.id.text_recognition)
         objectRecognition.setVisibility(View.INVISIBLE)
-        selfieSegmentation.setVisibility(View.INVISIBLE)
         faceDetection.setVisibility(View.INVISIBLE)
+        textRecognition.setVisibility(View.INVISIBLE)
 
         val netButton: ImageButton = findViewById(R.id.netButton)
         netButton.setOnClickListener {
             if(objectRecognition.isVisible){
                 objectRecognition.setVisibility(View.INVISIBLE)
-                selfieSegmentation.setVisibility(View.INVISIBLE)
                 faceDetection.setVisibility(View.INVISIBLE)
+                textRecognition.setVisibility(View.INVISIBLE)
             }
             else{
                 objectRecognition.setVisibility(View.VISIBLE)
-                selfieSegmentation.setVisibility(View.VISIBLE)
                 faceDetection.setVisibility(View.VISIBLE)
+                textRecognition.setVisibility(View.VISIBLE)
             }
         }
 
         objectRecognition.setOnClickListener {
             val intent = Intent(this, ObjRecognitionActivity::class.java)
             startActivity(intent)
-            makeButtonsInvisible(objectRecognition, faceDetection, selfieSegmentation)
-        }
-
-        selfieSegmentation.setOnClickListener {
-            val intent = Intent(this, SelfieSegmentationActivity::class.java)
-            startActivity(intent)
-            makeButtonsInvisible(objectRecognition, faceDetection, selfieSegmentation)
+            makeButtonsInvisible(textRecognition, faceDetection, objectRecognition)
         }
 
         faceDetection.setOnClickListener {
             val intent = Intent(this, FaceDetectionActivity::class.java)
             startActivity(intent)
-            makeButtonsInvisible(objectRecognition, faceDetection, selfieSegmentation)
+            makeButtonsInvisible(textRecognition, faceDetection, objectRecognition)
+        }
+
+        textRecognition.setOnClickListener {
+            val intent = Intent(this,TextRecognitionActivity::class.java)
+            startActivity(intent)
+            makeButtonsInvisible(textRecognition, faceDetection, objectRecognition)
         }
         // Use-case buttons END
         if (allPermissionsGranted()) {
@@ -143,75 +163,19 @@ class TextRecognitionActivity : AppCompatActivity(){
         }
     }
 
-    private fun onTextRecognitionTaskSuccess(result: Text) {
-        graphicOverlay!!.clear()
-        if (needUpdateGraphicOverlayImageSourceInfo) {
-            val size: Size = cameraSource!!.getPreviewSize()!!
-            if (size != null) {
-                Log.d(TAG, "preview width: " + size.width)
-                Log.d(TAG, "preview height: " + size.height)
-                val isImageFlipped =
-                        cameraSource!!.getCameraFacing() == CameraSourceConfig.CAMERA_FACING_FRONT
-                if (isPortraitMode) {
-                    // Swap width and height sizes when in portrait, since it will be rotated by
-                    // 90 degrees. The camera preview and the image being processed have the same size.
-                    graphicOverlay!!.setImageSourceInfo(size.height, size.width, isImageFlipped)
-                } else {
-                    graphicOverlay!!.setImageSourceInfo(size.width, size.height, isImageFlipped)
-                }
-                needUpdateGraphicOverlayImageSourceInfo = false
-            } else {
-                Log.d(TAG, "previewsize is null")
-            }
-        }
-
-        Log.v(TAG, "Text recognition successful!")
-        // Draw the NN info
-        graphicOverlay!!.add(RecognizedTextGraphic(graphicOverlay!!, result, true))
-        graphicOverlay!!.add(InferenceInfoGraphic(graphicOverlay!!))
-        graphicOverlay!!.postInvalidate()
-    }
-
-    private fun onTextRecognitionTaskFailure(e: Exception) {
-        graphicOverlay!!.clear()
-        graphicOverlay!!.postInvalidate()
-
-        // Display info about the error
-        val error = "Failed to process. Error: " + e.localizedMessage
-        Toast.makeText(
-                graphicOverlay!!.getContext(),
-                """
-   $error
-   Cause: ${e.cause}
-      """.trimIndent(),
-                Toast.LENGTH_SHORT
-        )
-                .show()
-        Log.d(TAG, error)
-    }
-
-    // Start or switch from the front facing camera and the back facing camera
     private fun startSwitchCamera() {
-        if (cameraSource != null)
-        {
+        if (cameraSource != null) {
             cameraSource!!.close()
         }
+        segmenter = Segmentation.getClient(selfieSegmentationOptions!!)
 
-        textRecognizer = TextRecognition.getClient(TEXT_RECOGNIZER_OPTIONS)
 
         val builder: CameraSourceConfig.Builder = CameraSourceConfig.Builder(
-                getApplicationContext(), textRecognizer!!, textRecTaskCallback
+                getApplicationContext(), segmenter!!, segmentationTaskCallback!!
         ).setFacing(lensFacing)
 
         // Change camera from one switch to another
-        if (lensFacing == CameraSourceConfig.CAMERA_FACING_BACK)
-        {
-            lensFacing = CameraSourceConfig.CAMERA_FACING_FRONT
-        }
-        else
-        {
-            lensFacing = CameraSourceConfig.CAMERA_FACING_BACK
-        }
+        switchCameraFacing()
 
         targetResolution = Size(previewView!!.layoutParams.width, previewView!!.layoutParams.height)
         if (targetResolution != null) {
@@ -231,6 +195,53 @@ class TextRecognitionActivity : AppCompatActivity(){
             return
         }
         cameraSource!!.start()
+    }
+
+    private fun onSegmentationTaskSuccess(mask:SegmentationMask) {
+        graphicOverlay!!.clear()
+        if (needUpdateGraphicOverlayImageSourceInfo) {
+            if (isPortraitMode) {
+                // Swap width and height sizes when in portrait, since it will be rotated by
+                // 90 degrees. The camera preview and the image being processed have the same size.
+                graphicOverlay!!.setImageSourceInfo(
+                        CAMERA_PREVIEW_WIDTH,
+                        CAMERA_PREVIEW_HEIGHT,
+                        isImageFlipped
+                )
+            } else {
+                graphicOverlay!!.setImageSourceInfo(
+                        CAMERA_PREVIEW_HEIGHT,
+                        CAMERA_PREVIEW_WIDTH,
+                        isImageFlipped
+                )
+            }
+            needUpdateGraphicOverlayImageSourceInfo = false
+        }
+
+        Log.v(SelfieSegmentationActivity.TAG, "Face detection successful!")
+        // Draw the NN info
+
+        graphicOverlay!!.add(SelfieSegmentationGraphic(graphicOverlay!!, mask))
+        graphicOverlay!!.add(InferenceInfoGraphic(graphicOverlay!!))
+        graphicOverlay!!.postInvalidate()
+    }
+
+    private fun onSegmentationTaskFailure(e: Exception) {
+        graphicOverlay!!.clear()
+        graphicOverlay!!.postInvalidate()
+
+        // Display info about the error
+        val error = "Failed to process. Error: " + e.localizedMessage
+        Toast.makeText(
+                graphicOverlay!!.getContext(),
+                """
+   $error
+   Cause: ${e.cause}
+      """.trimIndent(),
+                Toast.LENGTH_SHORT
+        )
+                .show()
+        Log.d(TAG, error)
     }
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
@@ -267,11 +278,11 @@ class TextRecognitionActivity : AppCompatActivity(){
                 )
 
     companion object {
-        private const val TAG = "TextRecognitionUnit"
+        private const val TAG = "SelfieSegmentationUnit"
         private const val REQUEST_CODE_PERMISSIONS = 10
-        private val TEXT_RECOGNIZER_OPTIONS = TextRecognizerOptions.DEFAULT_OPTIONS
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
         private const val CAMERA_PREVIEW_WIDTH = 1080
         private const val CAMERA_PREVIEW_HEIGHT = 1920
+        private const val isStreamMode = true
     }
 }

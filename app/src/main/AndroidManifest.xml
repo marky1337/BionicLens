@@ -26,6 +26,7 @@
 <!--        <activity android:name=".intro.IntroActivity"></activity>-->
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".facedetection.FaceDetectionActivity"></activity>
+        <activity android:name=".selfie_segmentation.SelfieSegmentationActivity"></activity>
 
         <meta-data
             android:name="com.google.mlkit.vision.DEPENDENCIES"

@@ -60,6 +60,10 @@ public class GraphicOverlay extends View {
             return overlay.getContext().getApplicationContext();
         }
 
+         public Matrix getTransformationMatrix() {
+             return overlay.transformationMatrix;
+         }
+
         public boolean isImageFlipped() {
             return overlay.isImageFlipped;
         }

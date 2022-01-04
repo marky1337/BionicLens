@@ -19,6 +19,7 @@ import androidx.core.view.isVisible
 import com.example.bioniclens.agegenderrecognition.AgeGenRecognitionActivity
 import com.example.bioniclens.R
 import com.example.bioniclens.objectrecognition.ObjRecognitionActivity
+import com.example.bioniclens.selfie_segmentation.SelfieSegmentationActivity
 import com.example.bioniclens.textrecognition.TextRecognitionActivity
 import com.example.bioniclens.utils.GraphicOverlay
 import com.example.bioniclens.utils.InferenceInfoGraphic
@@ -128,7 +129,7 @@ class FaceDetectionActivity : AppCompatActivity(){
 
         // Use-case buttons START
         val objectRecognition: Button = findViewById<Button>(R.id.obj_recognition)
-        val ageRecognition: Button = findViewById<Button>(R.id.age_recognition)
+        val selfieSegmentation: Button = findViewById<Button>(R.id.selfie_segmentation)
         val textRecognition: Button = findViewById<Button>(R.id.text_recognition)
         val enableFaceContourButton = findViewById<Button>(R.id.enable_face_contour)
         val disableFaceContourButton = findViewById<Button>(R.id.disable_face_contour)
@@ -141,7 +142,7 @@ class FaceDetectionActivity : AppCompatActivity(){
         val favorAccuracyButton = findViewById<Button>(R.id.favor_accuracy)
         val favorPerformanceButton = findViewById<Button>(R.id.favor_performance)
         objectRecognition.setVisibility(View.INVISIBLE)
-        ageRecognition.setVisibility(View.INVISIBLE)
+        selfieSegmentation.setVisibility(View.INVISIBLE)
         textRecognition.setVisibility(View.INVISIBLE)
         enableFaceContourButton.setVisibility(View.INVISIBLE)
         disableFaceContourButton.setVisibility(View.INVISIBLE)
@@ -158,12 +159,12 @@ class FaceDetectionActivity : AppCompatActivity(){
         netButton.setOnClickListener {
             if(objectRecognition.isVisible){
                 objectRecognition.setVisibility(View.INVISIBLE)
-                ageRecognition.setVisibility(View.INVISIBLE)
+                selfieSegmentation.setVisibility(View.INVISIBLE)
                 textRecognition.setVisibility(View.INVISIBLE)
             }
             else{
                 objectRecognition.setVisibility(View.VISIBLE)
-                ageRecognition.setVisibility(View.VISIBLE)
+                selfieSegmentation.setVisibility(View.VISIBLE)
                 textRecognition.setVisibility(View.VISIBLE)
             }
 
@@ -227,21 +228,24 @@ class FaceDetectionActivity : AppCompatActivity(){
             }
 
             objectRecognition.setVisibility(View.INVISIBLE)
-            ageRecognition.setVisibility(View.INVISIBLE)
+            selfieSegmentation.setVisibility(View.INVISIBLE)
             textRecognition.setVisibility(View.INVISIBLE)
         }
 
         objectRecognition.setOnClickListener {
             val intent = Intent(this, ObjRecognitionActivity::class.java)
             startActivity(intent)
+            makeButtonsInvisible(textRecognition, objectRecognition, selfieSegmentation)
         }
-        ageRecognition.setOnClickListener {
-            val intent = Intent(this, AgeGenRecognitionActivity::class.java)
+        selfieSegmentation.setOnClickListener {
+            val intent = Intent(this, SelfieSegmentationActivity::class.java)
             startActivity(intent)
+            makeButtonsInvisible(textRecognition, objectRecognition, selfieSegmentation)
         }
         textRecognition.setOnClickListener {
             val intent = Intent(this, TextRecognitionActivity::class.java)
             startActivity(intent)
+            makeButtonsInvisible(textRecognition, objectRecognition, selfieSegmentation)
         }
         disableFaceContourButton.setOnClickListener{
             faceDetectorOptionsBuilder!!.setContourMode(FaceDetectorOptions.CONTOUR_MODE_NONE)
@@ -548,6 +552,16 @@ class FaceDetectionActivity : AppCompatActivity(){
 
         cameraSource = CameraXSource(builder.build(), previewView!!)
         needUpdateGraphicOverlayImageSourceInfo = true
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
         cameraSource!!.start()
     }
 
@@ -570,6 +584,12 @@ class FaceDetectionActivity : AppCompatActivity(){
                 finish()
             }
         }
+    }
+
+    private fun makeButtonsInvisible(b1 : Button, b2 : Button, b3 : Button){
+        b1.setVisibility(View.INVISIBLE)
+        b2.setVisibility(View.INVISIBLE)
+        b3.setVisibility(View.INVISIBLE)
     }
 
     private val isPortraitMode: Boolean
