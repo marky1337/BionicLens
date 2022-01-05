@@ -20,13 +20,20 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".objectrecognition.ObjRecognitionActivity"></activity>
-        <activity android:name=".agegenderrecognition.AgeGenRecognitionActivity"></activity>
-        <activity android:name=".textrecognition.TextRecognitionActivity"></activity>
+        <activity android:name=".objectrecognition.ObjRecognitionActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".agegenderrecognition.AgeGenRecognitionActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".textrecognition.TextRecognitionActivity"
+            android:screenOrientation="portrait"></activity>
 <!--        <activity android:name=".intro.IntroActivity"></activity>-->
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".facedetection.FaceDetectionActivity"></activity>
-        <activity android:name=".selfie_segmentation.SelfieSegmentationActivity"></activity>
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".facedetection.FaceDetectionActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".selfie_segmentation.SelfieSegmentationActivity"
+            android:screenOrientation="portrait"></activity>
+
 
         <meta-data
             android:name="com.google.mlkit.vision.DEPENDENCIES"
