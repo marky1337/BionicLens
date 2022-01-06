@@ -44,7 +44,7 @@ class SelfieSegmentationActivity : AppCompatActivity(){
     private var selfieSegmentationOptionsBuilder:SelfieSegmenterOptions.Builder? = null
     private var segmenter : Segmenter? = null
     private var targetResolution: Size? = null
-
+    private var backgroundIdx: Int = 0
 
     private fun switchCameraFacing()
     {
@@ -110,9 +110,18 @@ class SelfieSegmentationActivity : AppCompatActivity(){
         val objectRecognition: Button = findViewById<Button>(R.id.obj_recognition)
         val faceDetection: Button = findViewById<Button>(R.id.face_detection)
         val textRecognition: Button = findViewById<Button>(R.id.text_recognition)
+        val settingsButton: Button = findViewById(R.id.settingsButton)
+        val solidColorBackgroundButton: Button = findViewById(R.id.background_solid)
+        val backgroundButton1: Button = findViewById(R.id.background_1)
+        val backgroundButton2: Button = findViewById(R.id.background_2)
+        val backgroundButton3: Button = findViewById(R.id.background_3)
         objectRecognition.setVisibility(View.INVISIBLE)
         faceDetection.setVisibility(View.INVISIBLE)
         textRecognition.setVisibility(View.INVISIBLE)
+        solidColorBackgroundButton.setVisibility(View.INVISIBLE)
+        backgroundButton1.setVisibility(View.INVISIBLE)
+        backgroundButton2.setVisibility(View.INVISIBLE)
+        backgroundButton3.setVisibility(View.INVISIBLE)
 
         val netButton: ImageButton = findViewById(R.id.netButton)
         netButton.setOnClickListener {
@@ -126,6 +135,64 @@ class SelfieSegmentationActivity : AppCompatActivity(){
                 faceDetection.setVisibility(View.VISIBLE)
                 textRecognition.setVisibility(View.VISIBLE)
             }
+
+            solidColorBackgroundButton.setVisibility(View.INVISIBLE)
+            backgroundButton1.setVisibility(View.INVISIBLE)
+            backgroundButton2.setVisibility(View.INVISIBLE)
+            backgroundButton3.setVisibility(View.INVISIBLE)
+        }
+
+        settingsButton.setOnClickListener {
+            if (solidColorBackgroundButton.isVisible)
+            {
+                solidColorBackgroundButton.setVisibility(View.INVISIBLE)
+                backgroundButton1.setVisibility(View.INVISIBLE)
+                backgroundButton2.setVisibility(View.INVISIBLE)
+                backgroundButton3.setVisibility(View.INVISIBLE)
+            }
+            else
+            {
+                solidColorBackgroundButton.setVisibility(View.VISIBLE)
+                backgroundButton1.setVisibility(View.VISIBLE)
+                backgroundButton2.setVisibility(View.VISIBLE)
+                backgroundButton3.setVisibility(View.VISIBLE)
+            }
+        }
+
+        solidColorBackgroundButton.setOnClickListener {
+            backgroundIdx = 0
+
+            solidColorBackgroundButton.setVisibility(View.INVISIBLE)
+            backgroundButton1.setVisibility(View.INVISIBLE)
+            backgroundButton2.setVisibility(View.INVISIBLE)
+            backgroundButton3.setVisibility(View.INVISIBLE)
+        }
+
+        backgroundButton1.setOnClickListener {
+            backgroundIdx = 1
+
+            solidColorBackgroundButton.setVisibility(View.INVISIBLE)
+            backgroundButton1.setVisibility(View.INVISIBLE)
+            backgroundButton2.setVisibility(View.INVISIBLE)
+            backgroundButton3.setVisibility(View.INVISIBLE)
+        }
+
+        backgroundButton2.setOnClickListener {
+            backgroundIdx = 2
+
+            solidColorBackgroundButton.setVisibility(View.INVISIBLE)
+            backgroundButton1.setVisibility(View.INVISIBLE)
+            backgroundButton2.setVisibility(View.INVISIBLE)
+            backgroundButton3.setVisibility(View.INVISIBLE)
+        }
+
+        backgroundButton3.setOnClickListener {
+            backgroundIdx = 3
+
+            solidColorBackgroundButton.setVisibility(View.INVISIBLE)
+            backgroundButton1.setVisibility(View.INVISIBLE)
+            backgroundButton2.setVisibility(View.INVISIBLE)
+            backgroundButton3.setVisibility(View.INVISIBLE)
         }
 
         objectRecognition.setOnClickListener {
@@ -218,10 +285,19 @@ class SelfieSegmentationActivity : AppCompatActivity(){
             needUpdateGraphicOverlayImageSourceInfo = false
         }
 
-        Log.v(SelfieSegmentationActivity.TAG, "Face detection successful!")
+        Log.v(SelfieSegmentationActivity.TAG, "Segmentation successful!")
         // Draw the NN info
 
-        graphicOverlay!!.add(SelfieSegmentationGraphic(graphicOverlay!!, mask))
+        val backgroundIndex = backgroundIdx
+        if (backgroundIndex == 0)
+        {
+            graphicOverlay!!.add(SelfieSegmentationGraphic(graphicOverlay!!, mask, false, 0))
+        }
+        else
+        {
+            graphicOverlay!!.add(SelfieSegmentationGraphic(graphicOverlay!!, mask, true, backgroundIdx))
+        }
+
         graphicOverlay!!.add(InferenceInfoGraphic(graphicOverlay!!))
         graphicOverlay!!.postInvalidate()
     }

@@ -31,4 +31,8 @@
     <string name="obj_det_classify">Turn OFF Classification</string>
     <string name="obj_det_increase_labels">Show More Labels</string>
     <string name="obj_det_decrease_labels">Show Less Labels</string>
+    <string name="segmentation_solid_color_background">Solid Color Background</string>
+    <string name="segmentation_background1">Use Background 1</string>
+    <string name="segmentation_background2">Use Background 2</string>
+    <string name="segmentation_background3">Use Background 3</string>
 </resources>
