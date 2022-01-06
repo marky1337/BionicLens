@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BionicLens">
-        <activity android:name=".intro.IntroActivity">
+        <activity android:name=".intro.IntroActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,17 +21,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".objectrecognition.ObjRecognitionActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".textrecognition.TextRecognitionActivity"
-            android:screenOrientation="portrait"></activity>
+        <activity android:name=".objectrecognition.ObjRecognitionActivity"></activity>
+        <activity android:name=".textrecognition.TextRecognitionActivity"></activity>
 <!--        <activity android:name=".intro.IntroActivity"></activity>-->
         <activity android:name=".MainActivity"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".facedetection.FaceDetectionActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".selfie_segmentation.SelfieSegmentationActivity"
-            android:screenOrientation="portrait"></activity>
+        <activity android:name=".facedetection.FaceDetectionActivity"></activity>
+        <activity android:name=".selfie_segmentation.SelfieSegmentationActivity"></activity>
 
 
         <meta-data

@@ -437,7 +437,10 @@ class ObjRecognitionActivity : AppCompatActivity(){
 
         targetResolution = Size(previewView!!.layoutParams.width, previewView!!.layoutParams.height)
         if (targetResolution != null) {
-            builder.setRequestedPreviewSize(CAMERA_PREVIEW_WIDTH, CAMERA_PREVIEW_HEIGHT)
+            if (isPortraitMode)
+                builder.setRequestedPreviewSize(CAMERA_PREVIEW_WIDTH, CAMERA_PREVIEW_HEIGHT)
+            else
+                builder.setRequestedPreviewSize(CAMERA_PREVIEW_HEIGHT, CAMERA_PREVIEW_WIDTH)
         }
 
         cameraSource = CameraXSource(builder.build(), previewView!!)
