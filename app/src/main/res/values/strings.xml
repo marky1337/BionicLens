@@ -2,11 +2,9 @@
     <string name="app_name">BionicLens</string>
     <string name="camera_activity"> Open camera </string>
     <string name="obj_recognition">Object Recognition</string>
-    <string name="age_recognition">Age&amp;Gender Recognition</string>
     <string name="text_recognition">Text Recognition</string>
     <string name="face_detection">Face Detection</string>
     <string name="obj_recogn_activity">Object Recognition</string>
-    <string name="age_recogn_activity">Age&amp;Gen Recognition</string>
     <string name="face_det_enable_contour">Enable Face Contour</string>
     <string name="face_det_disable_contour">Disable Face Contour</string>
     <string name="face_det_enable_landmarks">Enable Face Landmarks</string>

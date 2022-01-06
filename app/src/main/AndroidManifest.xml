@@ -22,8 +22,6 @@
 
         <activity android:name=".objectrecognition.ObjRecognitionActivity"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".agegenderrecognition.AgeGenRecognitionActivity"
-            android:screenOrientation="portrait"></activity>
         <activity android:name=".textrecognition.TextRecognitionActivity"
             android:screenOrientation="portrait"></activity>
 <!--        <activity android:name=".intro.IntroActivity"></activity>-->

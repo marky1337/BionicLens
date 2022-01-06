@@ -16,7 +16,6 @@ import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import com.example.bioniclens.agegenderrecognition.AgeGenRecognitionActivity
 import com.example.bioniclens.R
 import com.example.bioniclens.facedetection.FaceDetectionActivity
 import com.example.bioniclens.selfie_segmentation.SelfieSegmentationActivity
