@@ -19,4 +19,11 @@
     <string name="face_det_favor_accuracy">Favor Accuracy</string>
     <string name="intro">Intro</string>
     <string name="selfie_segmentation">Selfie Segmentation</string>
+    <string name="latin_only">Latin Symbols Only</string>
+    <string name="chinese_and_latin">Chinese and Latin</string>
+    <string name="japanese_and_latin">Japanese and Latin</string>
+    <string name="korean_and_latin">Korean and Latin</string>
+    <string name="devanagari_and_latin">Devanagari and Latin</string>
+    <string name="translate_to_english">Translate to English</string>
+    <string name="translate_to_romanian">Translate to Romanian</string>
 </resources>

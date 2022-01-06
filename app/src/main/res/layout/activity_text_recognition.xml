@@ -8,6 +8,18 @@
     tools:context=".objectrecognition.ObjRecognitionActivity">
 
 
+    <Button
+        android:id="@+id/settingsButton"
+        android:layout_width="58dp"
+        android:layout_height="58dp"
+        android:background="@drawable/settings_cog"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.976" />
+
     <androidx.camera.view.PreviewView
         android:id="@+id/viewFinder"
         android:layout_width="match_parent"
@@ -94,6 +106,93 @@
             android:background="@drawable/option_button"
             android:fontFamily="@font/hammersmith_one_regular"
             android:text="@string/face_detection"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:orientation="vertical">
+
+        <Button android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/latin_only"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:id="@+id/latin_only"
+            android:layout_gravity="center"
+            android:background="@drawable/option_button"
+            android:textColor="@color/white"
+            android:fontFamily="@font/hammersmith_one_regular"/>
+
+        <Button android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/chinese_and_latin"
+            android:id="@+id/chinese_and_latin"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/option_button"
+            android:textColor="@color/white"
+            android:fontFamily="@font/hammersmith_one_regular"/>
+
+        <Button
+            android:id="@+id/japanese_and_latin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/option_button"
+            android:fontFamily="@font/hammersmith_one_regular"
+            android:text="@string/japanese_and_latin"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/korean_and_latin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/option_button"
+            android:fontFamily="@font/hammersmith_one_regular"
+            android:text="@string/korean_and_latin"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/devanagari_and_latin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/option_button"
+            android:fontFamily="@font/hammersmith_one_regular"
+            android:text="@string/devanagari_and_latin"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/translate_to_english"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/option_button"
+            android:fontFamily="@font/hammersmith_one_regular"
+            android:text="@string/translate_to_english"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/translate_to_romanian"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/option_button"
+            android:fontFamily="@font/hammersmith_one_regular"
+            android:text="@string/translate_to_romanian"
             android:textColor="@color/white" />
 
     </LinearLayout>
