@@ -15,7 +15,8 @@ import kotlin.math.min
 // Draw the detected object info in preview.
 class ObjectGraphic constructor(
     overlay: GraphicOverlay,
-    private val detectedObject: DetectedObject
+    private val detectedObject: DetectedObject,
+    private val drawTrackingId: Boolean
 ) : Graphic(overlay) {
 
     private val numColors = COLORS.size
@@ -79,6 +80,9 @@ class ObjectGraphic constructor(
         rect.bottom = translateY(rect.bottom)
         canvas.drawRect(rect, boxPaints[colorID])
 
+        if (!drawTrackingId) {
+            yLabelOffset += lineHeight
+        }
         // Draws other object info.
         canvas.drawRect(
             rect.left - STROKE_WIDTH,
@@ -87,13 +91,16 @@ class ObjectGraphic constructor(
             rect.top,
             labelPaints[colorID]
         )
-        yLabelOffset += TEXT_SIZE
-        canvas.drawText(
-            "Tracking ID: " + detectedObject.trackingId,
-            rect.left,
-            rect.top + yLabelOffset,
-            textPaints[colorID]
-        )
+
+        if (drawTrackingId) {
+            yLabelOffset += TEXT_SIZE
+            canvas.drawText(
+                "Tracking ID: " + detectedObject.trackingId,
+                rect.left,
+                rect.top + yLabelOffset,
+                textPaints[colorID]
+            )
+        }
         yLabelOffset += lineHeight
         for (label in detectedObject.labels) {
             canvas.drawText(

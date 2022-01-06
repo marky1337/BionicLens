@@ -26,4 +26,9 @@
     <string name="devanagari_and_latin">Devanagari and Latin</string>
     <string name="translate_to_english">Translate to English</string>
     <string name="translate_to_romanian">Translate to Romanian</string>
+    <string name="obj_det_mode">Single Image Mode</string>
+    <string name="obj_det_multiple_objects">Single Object Detection</string>
+    <string name="obj_det_classify">Turn OFF Classification</string>
+    <string name="obj_det_increase_labels">Show More Labels</string>
+    <string name="obj_det_decrease_labels">Show Less Labels</string>
 </resources>
