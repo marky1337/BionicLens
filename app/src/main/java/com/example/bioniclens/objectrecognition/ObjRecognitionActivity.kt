@@ -43,6 +43,26 @@ class ObjRecognitionActivity : AppCompatActivity(){
     private var needUpdateGraphicOverlayImageSourceInfo = false
     private var objectDetector: ObjectDetector? = null
     private var detectionTaskCallback: DetectionTaskCallback<List<DetectedObject>>? = null
+    private var detectionModeSingleImage = false
+    private var trackMultipleObjects = MULTIPLE_OBJECTS_AT_ONCE
+    private var classifyObjects = CLASSIFICATION_ENABLED
+    private var labelCount = MAX_OBJECT_LABELS
+    private var objDetOptionsBuilder: CustomObjectDetectorOptions.Builder? = null
+    private var isImageFlipped: Boolean = false
+
+    private fun switchCameraFacing()
+    {
+        if (lensFacing == CameraSourceConfig.CAMERA_FACING_BACK)
+        {
+            lensFacing = CameraSourceConfig.CAMERA_FACING_FRONT
+            isImageFlipped = false
+        }
+        else
+        {
+            lensFacing = CameraSourceConfig.CAMERA_FACING_BACK
+            isImageFlipped = true
+        }
+    }
 
     // When resuming the app, restart the camera
     override fun onResume()
@@ -82,24 +102,25 @@ class ObjRecognitionActivity : AppCompatActivity(){
         }
 
         localModel = LocalModel.Builder().setAssetFilePath(MODEL_PATH).build()
+        objDetOptionsBuilder = CustomObjectDetectorOptions.Builder(localModel)
 
         // Set the desired Object Detection options
-        val objDetOptionsBuilder = CustomObjectDetectorOptions.Builder(localModel)
+        objDetOptionsBuilder!!
                 .setDetectorMode(CustomObjectDetectorOptions.STREAM_MODE)
                 .setClassificationConfidenceThreshold(MIN_CONFIDENCE)
                 .setMaxPerObjectLabelCount(MAX_OBJECT_LABELS)
 
         if (MULTIPLE_OBJECTS_AT_ONCE)
         {
-            objDetOptionsBuilder.enableMultipleObjects()
+            objDetOptionsBuilder!!.enableMultipleObjects()
         }
 
         if (CLASSIFICATION_ENABLED)
         {
-            objDetOptionsBuilder.enableClassification()
+            objDetOptionsBuilder!!.enableClassification()
         }
 
-        customObjectDetectorOptions = objDetOptionsBuilder.build()
+        customObjectDetectorOptions = objDetOptionsBuilder!!.build()
 
         // Set the callbacks for a successful inference and for a failed inference
         detectionTaskCallback =
@@ -113,10 +134,22 @@ class ObjRecognitionActivity : AppCompatActivity(){
         val textRecognition: Button = findViewById(R.id.text_recognition)
         val faceDetection: Button = findViewById(R.id.face_detection)
         val selfieSegmentation: Button = findViewById(R.id.selfie_segmentation)
+        val detectionModeButton: Button = findViewById(R.id.detection_mode)
+        val objectTrackButton: Button = findViewById(R.id.object_track)
+        val classifyObjectsButton: Button = findViewById(R.id.classify_objects)
+        val increaseLabelsButton: Button = findViewById(R.id.more_labels)
+        val decreaseLabelsButton: Button = findViewById(R.id.less_labels)
+        val settingsButton: Button = findViewById(R.id.settingsButton)
 
         textRecognition.setVisibility(View.INVISIBLE)
         faceDetection.setVisibility(View.INVISIBLE)
         selfieSegmentation.setVisibility(View.INVISIBLE)
+
+        detectionModeButton.setVisibility(View.INVISIBLE)
+        objectTrackButton.setVisibility(View.INVISIBLE)
+        classifyObjectsButton.setVisibility(View.INVISIBLE)
+        increaseLabelsButton.setVisibility(View.INVISIBLE)
+        decreaseLabelsButton.setVisibility(View.INVISIBLE)
 
         val netButton: ImageButton = findViewById(R.id.netButton)
         netButton.setOnClickListener {
@@ -129,6 +162,172 @@ class ObjRecognitionActivity : AppCompatActivity(){
                 textRecognition.setVisibility(View.VISIBLE)
                 faceDetection.setVisibility(View.VISIBLE)
                 selfieSegmentation.setVisibility(View.VISIBLE)
+            }
+
+            detectionModeButton.setVisibility(View.INVISIBLE)
+            objectTrackButton.setVisibility(View.INVISIBLE)
+            classifyObjectsButton.setVisibility(View.INVISIBLE)
+            increaseLabelsButton.setVisibility(View.INVISIBLE)
+            decreaseLabelsButton.setVisibility(View.INVISIBLE)
+        }
+
+        settingsButton.setOnClickListener {
+            if (detectionModeButton.isVisible)
+            {
+                detectionModeButton.setVisibility(View.INVISIBLE)
+                objectTrackButton.setVisibility(View.INVISIBLE)
+                classifyObjectsButton.setVisibility(View.INVISIBLE)
+                increaseLabelsButton.setVisibility(View.INVISIBLE)
+                decreaseLabelsButton.setVisibility(View.INVISIBLE)
+            }
+            else
+            {
+                detectionModeButton.setVisibility(View.VISIBLE)
+                objectTrackButton.setVisibility(View.VISIBLE)
+                classifyObjectsButton.setVisibility(View.VISIBLE)
+                increaseLabelsButton.setVisibility(View.VISIBLE)
+                decreaseLabelsButton.setVisibility(View.VISIBLE)
+            }
+
+            textRecognition.setVisibility(View.INVISIBLE)
+            faceDetection.setVisibility(View.INVISIBLE)
+            selfieSegmentation.setVisibility(View.INVISIBLE)
+        }
+
+        detectionModeButton.setOnClickListener {
+            if (detectionModeSingleImage == true)
+            {
+                objDetOptionsBuilder!!.setDetectorMode(CustomObjectDetectorOptions.STREAM_MODE)
+                detectionModeButton.text = "Single Image Mode"
+                detectionModeSingleImage = false
+            }
+            else
+            {
+                objDetOptionsBuilder!!.setDetectorMode(CustomObjectDetectorOptions.SINGLE_IMAGE_MODE)
+                detectionModeButton.text = "Streaming Mode"
+                detectionModeSingleImage = true
+            }
+
+            detectionModeButton.setVisibility(View.INVISIBLE)
+            objectTrackButton.setVisibility(View.INVISIBLE)
+            classifyObjectsButton.setVisibility(View.INVISIBLE)
+            increaseLabelsButton.setVisibility(View.INVISIBLE)
+            decreaseLabelsButton.setVisibility(View.INVISIBLE)
+
+            switchCameraFacing()
+            customObjectDetectorOptions = objDetOptionsBuilder!!.build()
+            startSwitchCamera()
+        }
+
+        objectTrackButton.setOnClickListener {
+            if (trackMultipleObjects == true)
+            {
+                objDetOptionsBuilder = CustomObjectDetectorOptions.Builder(localModel)
+                objDetOptionsBuilder!!.setClassificationConfidenceThreshold(MIN_CONFIDENCE)
+                objDetOptionsBuilder!!.setMaxPerObjectLabelCount(labelCount)
+                if (detectionModeSingleImage == true) objDetOptionsBuilder!!.setDetectorMode(CustomObjectDetectorOptions.SINGLE_IMAGE_MODE)
+                else objDetOptionsBuilder!!.setDetectorMode(CustomObjectDetectorOptions.STREAM_MODE)
+                if (classifyObjects) objDetOptionsBuilder!!.enableClassification()
+                objectTrackButton.text = "Multiple Object Detection"
+                trackMultipleObjects = false
+            }
+            else
+            {
+                objDetOptionsBuilder!!.enableMultipleObjects()
+                objectTrackButton.text = "Single Object Detection"
+                trackMultipleObjects = true
+            }
+
+            detectionModeButton.setVisibility(View.INVISIBLE)
+            objectTrackButton.setVisibility(View.INVISIBLE)
+            classifyObjectsButton.setVisibility(View.INVISIBLE)
+            increaseLabelsButton.setVisibility(View.INVISIBLE)
+            decreaseLabelsButton.setVisibility(View.INVISIBLE)
+
+            switchCameraFacing()
+            customObjectDetectorOptions = objDetOptionsBuilder!!.build()
+            startSwitchCamera()
+        }
+
+        classifyObjectsButton.setOnClickListener {
+            if (classifyObjects == true)
+            {
+                objDetOptionsBuilder = CustomObjectDetectorOptions.Builder(localModel)
+                objDetOptionsBuilder!!.setClassificationConfidenceThreshold(MIN_CONFIDENCE)
+                objDetOptionsBuilder!!.setMaxPerObjectLabelCount(labelCount)
+                if (detectionModeSingleImage == true) objDetOptionsBuilder!!.setDetectorMode(CustomObjectDetectorOptions.SINGLE_IMAGE_MODE)
+                else objDetOptionsBuilder!!.setDetectorMode(CustomObjectDetectorOptions.STREAM_MODE)
+                if (trackMultipleObjects) objDetOptionsBuilder!!.enableMultipleObjects()
+                classifyObjectsButton.text = "Turn ON Classification"
+                classifyObjects = false
+            }
+            else
+            {
+                objDetOptionsBuilder!!.enableClassification()
+                classifyObjectsButton.text = "Turn OFF Classification"
+                classifyObjects = true
+            }
+
+            detectionModeButton.setVisibility(View.INVISIBLE)
+            objectTrackButton.setVisibility(View.INVISIBLE)
+            classifyObjectsButton.setVisibility(View.INVISIBLE)
+            increaseLabelsButton.setVisibility(View.INVISIBLE)
+            decreaseLabelsButton.setVisibility(View.INVISIBLE)
+
+            switchCameraFacing()
+            customObjectDetectorOptions = objDetOptionsBuilder!!.build()
+            startSwitchCamera()
+        }
+
+        increaseLabelsButton.setOnClickListener {
+            var switchNeeded: Boolean
+            labelCount++
+            if (labelCount > 5) {
+                labelCount = 5
+                switchNeeded = false
+            }
+            else
+            {
+                switchNeeded = true
+            }
+            objDetOptionsBuilder!!.setMaxPerObjectLabelCount(labelCount)
+
+            detectionModeButton.setVisibility(View.INVISIBLE)
+            objectTrackButton.setVisibility(View.INVISIBLE)
+            classifyObjectsButton.setVisibility(View.INVISIBLE)
+            increaseLabelsButton.setVisibility(View.INVISIBLE)
+            decreaseLabelsButton.setVisibility(View.INVISIBLE)
+
+            if (switchNeeded) {
+                switchCameraFacing()
+                customObjectDetectorOptions = objDetOptionsBuilder!!.build()
+                startSwitchCamera()
+            }
+        }
+
+        decreaseLabelsButton.setOnClickListener {
+            var switchNeeded: Boolean
+            labelCount--
+            if (labelCount < 1) {
+                labelCount = 1
+                switchNeeded = false
+            }
+            else
+            {
+                switchNeeded = true
+            }
+            objDetOptionsBuilder!!.setMaxPerObjectLabelCount(labelCount)
+
+            detectionModeButton.setVisibility(View.INVISIBLE)
+            objectTrackButton.setVisibility(View.INVISIBLE)
+            classifyObjectsButton.setVisibility(View.INVISIBLE)
+            increaseLabelsButton.setVisibility(View.INVISIBLE)
+            decreaseLabelsButton.setVisibility(View.INVISIBLE)
+
+            if (switchNeeded) {
+                switchCameraFacing()
+                customObjectDetectorOptions = objDetOptionsBuilder!!.build()
+                startSwitchCamera()
             }
         }
 
@@ -149,6 +348,7 @@ class ObjRecognitionActivity : AppCompatActivity(){
             startActivity(intent)
             makeButtonsInvisible(textRecognition, faceDetection, selfieSegmentation)
         }
+
         // Use-case buttons END
         if (allPermissionsGranted()) {
             startSwitchCamera()
@@ -170,23 +370,22 @@ class ObjRecognitionActivity : AppCompatActivity(){
     private fun onDetectionTaskSuccess(results: List<DetectedObject>) {
         graphicOverlay!!.clear()
         if (needUpdateGraphicOverlayImageSourceInfo) {
-            val size: Size = cameraSource!!.getPreviewSize()!!
-            if (size != null) {
-                Log.d(TAG, "preview width: " + size.width)
-                Log.d(TAG, "preview height: " + size.height)
-                val isImageFlipped =
-                    cameraSource!!.getCameraFacing() == CameraSourceConfig.CAMERA_FACING_FRONT
-                if (isPortraitMode) {
-                    // Swap width and height sizes when in portrait, since it will be rotated by
-                    // 90 degrees. The camera preview and the image being processed have the same size.
-                    graphicOverlay!!.setImageSourceInfo(size.height, size.width, isImageFlipped)
-                } else {
-                    graphicOverlay!!.setImageSourceInfo(size.width, size.height, isImageFlipped)
-                }
-                needUpdateGraphicOverlayImageSourceInfo = false
+            if (isPortraitMode) {
+                // Swap width and height sizes when in portrait, since it will be rotated by
+                // 90 degrees. The camera preview and the image being processed have the same size.
+                graphicOverlay!!.setImageSourceInfo(
+                    CAMERA_PREVIEW_WIDTH,
+                    CAMERA_PREVIEW_HEIGHT,
+                    isImageFlipped
+                )
             } else {
-                Log.d(TAG, "previewsize is null")
+                graphicOverlay!!.setImageSourceInfo(
+                    CAMERA_PREVIEW_HEIGHT,
+                    CAMERA_PREVIEW_WIDTH,
+                    isImageFlipped
+                )
             }
+            needUpdateGraphicOverlayImageSourceInfo = false
         }
         Log.v(TAG, "Number of object been detected: " + results.size)
         // Draw the NN info
@@ -194,7 +393,8 @@ class ObjRecognitionActivity : AppCompatActivity(){
             graphicOverlay!!.add(
                 ObjectGraphic(
                     graphicOverlay!!,
-                    `object`
+                    `object`,
+                    !detectionModeSingleImage
                 )
             )
         }
@@ -234,14 +434,7 @@ class ObjRecognitionActivity : AppCompatActivity(){
         ).setFacing(lensFacing)
 
         // Change camera from one switch to another
-        if (lensFacing == CameraSourceConfig.CAMERA_FACING_BACK)
-        {
-            lensFacing = CameraSourceConfig.CAMERA_FACING_FRONT
-        }
-        else
-        {
-            lensFacing = CameraSourceConfig.CAMERA_FACING_BACK
-        }
+        switchCameraFacing()
 
         targetResolution = Size(previewView!!.layoutParams.width, previewView!!.layoutParams.height)
         if (targetResolution != null) {
