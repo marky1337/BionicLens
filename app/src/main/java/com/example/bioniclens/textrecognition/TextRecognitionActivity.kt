@@ -24,7 +24,6 @@ import com.example.bioniclens.facedetection.FaceDetectionActivity
 import com.example.bioniclens.objectrecognition.ObjRecognitionActivity
 import com.example.bioniclens.selfie_segmentation.SelfieSegmentationActivity
 import com.example.bioniclens.utils.GraphicOverlay
-import com.example.bioniclens.utils.InferenceInfoGraphic
 import com.google.mlkit.common.model.DownloadConditions
 import com.google.mlkit.nl.languageid.LanguageIdentification
 import com.google.mlkit.nl.translate.TranslateLanguage

@@ -71,7 +71,7 @@ class IntroActivity : AppCompatActivity() {
         mList.add(
                 ScreenItem(
                         "Switch camera",
-                        "★ Switch to front/back camera",
+                        "★ Switch between front-facing and rear-facing camera",
                         R.drawable.switch_camera
                 )
         )
@@ -85,16 +85,16 @@ class IntroActivity : AppCompatActivity() {
         mList.add(
                 ScreenItem(
                         "Object Recognition",
-                        "★ Start camera, and you can do identify, live, different categories of objects.\n"+
-                                "★ You can do object detection with either front and back camera.\n"+
-                                "★ Application can recognize up to 80 different categories of objects.\n",
+                        "★ Start the camera, and you can identify different categories of objects in real-time.\n"+
+                                "★ The application can recognize up to 631 different categories of objects.\n"+
+                                "★ You can configure the demo behaviour using the settings button.\n",
                         R.drawable.intro_obj_activity
                 )
         )
         mList.add(
                 ScreenItem(
                         "Face detection",
-                        "  ★ Start camera, and you cand detect faces from real-time frames from your camera.\n"+
+                        "  ★ Start the camera, and you can detect faces in real-time in frames from your camera.\n"+
                                    "★ You can identify key facial features and contours of detected faces.\n" +
                                    "★ You can customize face detection by the settings button with different options.\n",
                         R.drawable.intro_face_activity
@@ -103,7 +103,10 @@ class IntroActivity : AppCompatActivity() {
         mList.add(
                 ScreenItem(
                         "Text recognition",
-                        "★ Real-time text recognition in any Latin-based characters set",
+                        "★ Real-time text recognition\n"+
+                        "★ Latin-based, Chinese, Japanese, Korean and Devanagari characters are supported.\n"+
+                        "★ You can translate in real-time the recognized text to either English or Romanian.\n"+
+                        "★ The character set and the target translation language can be configured by the settings button.\n",
                         R.drawable.ic_text_recognition
                 )
         )
@@ -111,7 +114,8 @@ class IntroActivity : AppCompatActivity() {
                 ScreenItem(
                         "Selfie segmentation",
                         "★ Real-time selfie segmentation.\n"+
-                                   "★ Separate the background from users within a scene.\n",
+                                   "★ Separate the background from users within a scene.\n"+
+                                   "★ From the settings, you can choose to have a solid color background or you can choose from 3 background images.\n",
                         R.drawable.intro_selfie_segmentation
                 )
         )
