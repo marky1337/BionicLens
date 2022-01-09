@@ -156,6 +156,10 @@ class SelfieSegmentationActivity : AppCompatActivity(){
                 backgroundButton2.setVisibility(View.VISIBLE)
                 backgroundButton3.setVisibility(View.VISIBLE)
             }
+
+            objectRecognition.setVisibility(View.INVISIBLE)
+            faceDetection.setVisibility(View.INVISIBLE)
+            textRecognition.setVisibility(View.INVISIBLE)
         }
 
         solidColorBackgroundButton.setOnClickListener {
