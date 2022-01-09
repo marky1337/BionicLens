@@ -1,17 +1,17 @@
 # BionicLens
 ![Android](https://img.shields.io/badge/platform-android-lightgrey.svg)
 
-Android App which runs inference on camera stream
+Android App which showcases multiple Machine Learning Computer Vision applications which can be performed by your mobile phone.
 
 ## 📱 Description
-Mobile application which apply machine learning techniques using ML KIT APIs on Android. Each technique is presented as a single activity (All in one app).
+Mobile application which runs different Machine Learning use-cases using Google ML KIT APIs on Android. Each use-case is presented as a single activity (All in one app).
 
 Machine learning use-cases from the app:
 
 - Object Recognition
 - Face Detection
 - Text Recognition and Translation
-- Selfie segmentation
+- Selfie Segmentation
 ### 📸 Camera
 - [📷 CameraX example](app/src/main/java/com/asmaamir/mlkitdemo/CameraX): Preview, Capture and Analyze functionalities
 
@@ -19,25 +19,26 @@ Machine learning use-cases from the app:
 - Real-time object detection, face detection, selfie segmentation and text recognition and translation
   - The application process frames in real time from camera stream
 - Object detection
-  - For each frame from live camera feed, the activity will start do detect and recognize different type of objects (up to 80 different type of objects) with a specific               confidence, multiple objects can be present in detection.
+  - For each frame from live camera feed, the activity will detect and recognize different types of objects (up to 631 different types of objects) with a specific               confidence, multiple objects can be present in detection.
+  - User has the option to configure the object detection application.
 - Face detection
-   - Real-time face detection, the activity will identify key facial features and contours of detected faces, 1 face contour at a time.
-   - User has the option to customize the activity to focus on specific features to detect.
+   - Real-time face detection. The application will identify key facial features and contours of detected faces.
+   - User has the option to customize the application to focus on specific features that should be detected.
 - Text Recognition and Translation
-   - Real-time text recognition in any Latin-based languages, support for Chinese, Japanese, Korean and Devanagari (Hindi) symbols.
-   - User has options for real-time translation to either Romanian or English
-- Selfie segmentation
-   - For each human detected, the activity will separate the background and focuses on human body.
+   - Real-time text recognition of any languages with Latin-based, Chinese, Japanese, Korean and Devanagari (Hindi) symbols.
+   - User has the option to turn ON real-time translation to either Romanian or English.
+- Selfie Segmentation
+   - For each person detected, the activity will separate the background and will focus on the person's body.
    - User has the option to choose a virtual background from 3 static images found in the app.
-- All results will displayed in a separate UI instance. 
+- All results will be displayed in a separate UI instance. 
 
 ## Technologies:
 
 Android Studio
 
-Kotlin
+Kotlin/Java
 
-ML Kit APIs
+Google ML Kit APIs
 
 ## Used Models
 - Object Detection: [lite-model_object_detection_mobile_object_labeler_v1_1](https://tfhub.dev/google/lite-model/object_detection/mobile_object_labeler_v1/1)
