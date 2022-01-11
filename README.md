@@ -27,6 +27,7 @@ Machine learning use-cases from the app:
 - Text Recognition and Translation
    - Real-time text recognition of any languages with Latin-based, Chinese, Japanese, Korean and Devanagari (Hindi) symbols.
    - User has the option to turn ON real-time translation to either Romanian or English.
+   - User will have to wait for the download of new Language Translation Models before they are used for the first time.
 - Selfie Segmentation
    - For each person detected, the activity will separate the background and will focus on the person's body.
    - User has the option to choose a virtual background from 3 static images found in the app.
